@@ -2,13 +2,39 @@
 
 module NumberInWords where
 
-myUnits = [("billion ", 10^9), ("million ", 10^6), ("thousand ", 10^3), ("hundred ", 100),
-                  ("ninety ", 90), ("eighty ", 80), ("seventy ", 70), ("sixty ", 60), ("fifty ", 50),
-                  ("forty ", 40), ("thirty ", 30), ("twenty ", 20), ("nineteen ", 19), ("eighteen ", 18),
-                  ("seventeen ", 17),("sixteen ", 16), ("fifteen ", 15), ("fourteen ", 14), ("thirteen ", 13),
-                  ("twelve ", 12), ("eleven ", 11), ("ten ", 10), ("nine ", 9), ("eight ", 8),
-                  ("seven ", 7), ("six ", 6), ("five ", 5), ("four ", 4), ("three ", 3), ("two ", 2),
-                  ("one ", 1), ("zero ", 0)]
+myUnits :: [(String, Integer)]
+myUnits = [("billion ", 10^9),
+           ("million ", 10^6),
+           ("thousand ", 10^3),
+           ("hundred ", 100),
+           ("ninety ", 90),
+           ("eighty ", 80),
+           ("seventy ", 70),
+           ("sixty ", 60),
+           ("fifty ", 50),
+           ("forty ", 40),
+           ("thirty ", 30),
+           ("twenty ", 20),
+           ("nineteen ", 19),
+           ("eighteen ", 18),
+           ("seventeen ", 17),
+           ("sixteen ", 16),
+           ("fifteen ", 15),
+           ("fourteen ", 14),
+           ("thirteen ", 13),
+           ("twelve ", 12),
+           ("eleven ", 11),
+           ("ten ", 10),
+           ("nine ", 9),
+           ("eight ", 8),
+           ("seven ", 7),
+           ("six ", 6),
+           ("five ", 5),
+           ("four ", 4),
+           ("three ", 3),
+           ("two ", 2),
+           ("one ", 1),
+           ("zero ", 0)]
 
 num2words :: Integer -> [(String, Integer)] -> Integer -> String
 num2words 0 _ _ = ""
