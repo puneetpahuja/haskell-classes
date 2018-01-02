@@ -8,7 +8,9 @@ primes n = take n (filter prime [1..])
 prime :: Int -> Bool
 prime 1 = False
 prime 2 = True
-prime n = take 2 (factors n (floor (sqrt (fromIntegral n)))) == [1]
+prime n = take 2 (factors n (sqrtInt n)) == [1]
+          where
+            sqrtInt n = floor (sqrt (fromIntegral n))
 
 factors :: Int -> Int -> [Int]
 factors n x = filter dividesN [1..x]
