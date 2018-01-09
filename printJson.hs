@@ -51,20 +51,9 @@ json = let m1 = ObjMember "a" Null
            obj = Obj (ConsList m1 (ConsList m2 (ConsList m3 (ConsList m4 (ConsList m5 (ConsList m6 EmptyList))))))
            in Object obj
 
-
-
--- type AAA = Int
--- instance Show AAA where
---  show x = "1"
-
--- type ObjMember = (String, Value)   -- why i cant implement show on them?
--- issues : (Number 5) shows as "5.0"
-
-
-
 {-
 
- json
+> json
 {["a": Null
 , "b": True
 , "c": False
@@ -75,4 +64,10 @@ json = let m1 = ObjMember "a" Null
 
 -}
 
+-- type AAA = Int
+-- instance Show AAA where
+--  show x = "1"
+
+-- type ObjMember = (String, Value)   -- why i cant implement show on them?
+-- issues : (Number 5) shows as "5.0"
 
