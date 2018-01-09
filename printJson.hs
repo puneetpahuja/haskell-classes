@@ -11,7 +11,7 @@ data Value = Str String
            | Array [Value]
            | Null
 
-data Obj = Obj [ObjMember]
+newtype Obj = Obj [ObjMember]
 
 data ObjMember = ObjMember String Value
 
@@ -19,11 +19,11 @@ instance Show ObjMember where
   show (ObjMember x y) = show x ++ ": " ++ show y
 
 instance Show Obj where
- show x = "{" ++ show' x ++ "}"
+ show x = "{\n" ++ show' x ++ "\n}"
     where
       show' (Obj [])     = ""
-      show' (Obj [y])    = show y
-      show' (Obj (y:ys)) = show y ++ ", \n" ++ show' (Obj ys)
+      show' (Obj [y])    = "  " ++ show y
+      show' (Obj (y:ys)) = "  " ++ show y ++ ", \n" ++ show' (Obj ys)
 
 instance Show Value where
   show (Str x)         = show x
@@ -40,19 +40,21 @@ json = let m1 = ObjMember "a" Null
            m3 = ObjMember "c" (Boolean False)
            m4 = ObjMember "d" (Str "abc")
            m5 = ObjMember "e" (Number 5)
-           m6 = ObjMember "f" (Array [(Boolean True), (Number 6.55)])
+           m6 = ObjMember "f" (Array [Boolean True, Number 6.55])
            obj = Obj [m1, m2, m3, m4, m5, m6]
            in Object obj
 
 {-
 
 > json
-{"a": null,
-"b": true,
-"c": false,
-"d": "abc",
-"e": 5.0,
-"f": [true,6.55]}
+{
+  "a": null,
+  "b": true,
+  "c": false,
+  "d": "abc",
+  "e": 5.0,
+  "f": [true,6.55]
+}
 
 -}
 
