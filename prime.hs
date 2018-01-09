@@ -17,6 +17,31 @@ factors n x = filter dividesN [1..x]
               where
                 dividesN x = n `mod` x == 0
 
+
+data List a = Empty | Cons a (List a)
+
+instance Show a => Show (List a) where
+  show l = "[" ++ show' l ++ "]"
+    where
+      show' (Cons x Empty) = show x
+      show' (Cons x y) = show x ++ ", " ++ show' y
+      show' Empty = ""
+
+
+instance Eq' Color where
+  equal Red Red = True
+  equal Blue Blue = True
+  equal Green Green = True
+  equal _ _ = False
+
+instance Eq' a => Eq' (List a) where
+  equal Empty Empty = True
+  equal (Cons x xs) (Cons y ys) = equal x y && equal xs ys
+  equal _ _ = False
+
+class (Eq' a) => Ord' a where
+  compare' :: a -> a -> Ordering
+
 {-
 > primes 100
 [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,
