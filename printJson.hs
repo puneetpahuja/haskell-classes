@@ -8,38 +8,31 @@ data Value = Str String
            | Number Float
            | Object Obj
            | Boolean Bool
-           | Array (List Value)
+           | Array [Value]
            | Null
 
-data List a = EmptyList | ConsList a (List a)
-
-data Obj = EmptyObj | Obj (List ObjMember)
+data Obj = Obj [ObjMember]
 
 data ObjMember = ObjMember String Value
 
-instance (Show a) => Show (List a) where
-  show x = "[" ++ show' x ++ "]"
-    where
-      show' EmptyList               = ""
-      show' (ConsList y EmptyList)  = show y
-      show' (ConsList y ys)         = show y ++ ", " ++ show' ys
-
 instance Show ObjMember where
-  show (ObjMember x y) = show x ++ ": " ++ show y ++ "\n"
+  show (ObjMember x y) = show x ++ ": " ++ show y
 
-instance Show Obj where 
+instance Show Obj where
  show x = "{" ++ show' x ++ "}"
     where
-      show' EmptyObj     = ""
-      show' (Obj y) = show y
+      show' (Obj [])     = ""
+      show' (Obj [y])    = show y
+      show' (Obj (y:ys)) = show y ++ ", \n" ++ show' (Obj ys)
 
 instance Show Value where
-  show (Str x) = show x
-  show (Number x) = show x
-  show (Object x) = show x
-  show (Boolean x) = show x
-  show (Array x) = show x
-  show Null = "Null"
+  show (Str x)         = show x
+  show (Number x)      = show x
+  show (Object x)      = show x
+  show (Boolean True)  = "true"
+  show (Boolean False) = "false"
+  show (Array x)       = show x
+  show Null            = "null"
 
 json :: JSON
 json = let m1 = ObjMember "a" Null
@@ -47,20 +40,19 @@ json = let m1 = ObjMember "a" Null
            m3 = ObjMember "c" (Boolean False)
            m4 = ObjMember "d" (Str "abc")
            m5 = ObjMember "e" (Number 5)
-           m6 = ObjMember "f" (Array (ConsList (Boolean True) (ConsList (Number 6.55) EmptyList)))
-           obj = Obj (ConsList m1 (ConsList m2 (ConsList m3 (ConsList m4 (ConsList m5 (ConsList m6 EmptyList))))))
+           m6 = ObjMember "f" (Array [(Boolean True), (Number 6.55)])
+           obj = Obj [m1, m2, m3, m4, m5, m6]
            in Object obj
 
 {-
 
 > json
-{["a": Null
-, "b": True
-, "c": False
-, "d": "abc"
-, "e": 5.0
-, "f": [True, 6.55]
-]}
+{"a": null,
+"b": true,
+"c": false,
+"d": "abc",
+"e": 5.0,
+"f": [true,6.55]}
 
 -}
 
@@ -70,4 +62,3 @@ json = let m1 = ObjMember "a" Null
 
 -- type ObjMember = (String, Value)   -- why i cant implement show on them?
 -- issues : (Number 5) shows as "5.0"
-
