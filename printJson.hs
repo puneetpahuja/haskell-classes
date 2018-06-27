@@ -6,24 +6,24 @@ type JSON = Value
 
 data Value = Str String
            | Number Float
-           | Object Obj
+           | Object [ObjMember]
            | Boolean Bool
            | Array [Value]
            | Null
-
-newtype Obj = Obj [ObjMember]
 
 data ObjMember = ObjMember String Value
 
 instance Show ObjMember where
   show (ObjMember x y) = show x ++ ": " ++ show y
 
-instance Show Obj where
+-- do it in show value
+-- use map or intercalate/concat/intersperse instead of writing recursion by hand
+instance Show Object where
  show x = "{\n" ++ show' x ++ "\n}"
     where
-      show' (Obj [])     = ""
-      show' (Obj [y])    = "  " ++ show y
-      show' (Obj (y:ys)) = "  " ++ show y ++ ", \n" ++ show' (Obj ys)
+      show' (Object [])     = ""
+      show' (Object [y])    = "  " ++ show y
+      show' (Object (y:ys)) = "  " ++ show y ++ ", \n" ++ show' (Obj ys)
 
 instance Show Value where
   show (Str x)         = show x
